@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for choice in choices %}
+  <div id="modal{{choice.id}}" class="modal">
+    <div class="modal-content">
+      <h4>Are you sure?</h4>
+      <p>You really want to delete this choice, "{{choice.choice_text}}"?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-light btn-flat">No</a>
+      <a href="{% url 'remove_choice' choice.id %}" class="modal-action modal-close waves-effect waves-light btn-flat">Yes</a>
+    </div>
+  </div>
+{% endfor %}
+
+{% if question.closed %}
+  <div id="modalOpen" class="modal">
+    <div class="modal-content">
+      <h4>Are you sure?</h4>
+      <p>You really want to open this question?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-light btn-flat">No</a>
+      <a href="{% url 'open_question' question.id %}" class="modal-action modal-close waves-effect waves-light btn-flat">Yes</a>
+    </div>
+  </div>
+{% else %}
+  <div id="modalClose" class="modal">
+    <div class="modal-content">
+      <h4>Are you sure?</h4>
+      <p>You really want to close this question?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-light btn-flat">No</a>
+      <a href="{% url 'close_question' question.id %}" class="modal-action modal-close waves-effect waves-light btn-flat">Yes</a>
+    </div>
+  </div>
+{% endif %}
+
+<h4 class="center">{{ question.question_text }}</h4>
+<table class="highlight">
+  <thead>
+    <tr>
+      <th>Choice</th>
+      <th class="right-align">Votes</th>
+      <th class="right-align"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for choice in choices %}
+    <tr>
+      <td>{{ choice.choice_text }}</td>
+      <td class="right-align">{{ choice.votes }}</td>
+      <td class="right-align"><a href="#modal{{choice.id}}" class="grey-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="Remove"><i class="material-icons">remove</i></a></td
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<br>
+<div class="row center">
+  {% if question.closed %}
+    <a class="btn grey" href="#modalOpen">Open question</a>
+    <a class="btn grey" href="{% url 'results' question.id %}">Return</a>
+  {% else %}
+    <a class="btn grey" href="#modalClose">Close question</a>
+    <a class="btn grey" href="{% url 'question' question.id %}">Return</a>
+  {% endif %}
+</div>
+<br>
+
+{% endblock %}

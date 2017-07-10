@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h4 class="center">{{ question.question_text }}</h4>
+<table class="highlight">
+  <thead>
+    <tr>
+      <th>Choice</th>
+      <th class="right-align">Votes</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for choice in choices %}
+    <tr>
+      <td>{{ choice.choice_text }}</td>
+      <td class="right-align">{{ choice.votes }}</td>
+      <td class="right-align"><a href="{% url 'increment_vote' choice.id %}" class="grey-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="Vote"><i class="material-icons">add</i></a></td
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<br>
+<div class="row center">
+  <a class="btn grey" href="{% url 'question' question.id %}">Return</a>
+</div>
+<br>
+
+{% endblock %}

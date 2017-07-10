@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h4 class="center">{{ question.question_text }}</h4>
+<table class="highlight">
+  <thead>
+    <tr>
+      <th>Choice</th>
+      <th class="right-align">Votes</th>
+      <th class="right-align">%</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for choice in choices %}
+    <tr>
+      <td>{{ choice.choice_text }}</td>
+      <td class="right-align">{{ choice.votes }}</td>
+      <td class="right-align">{% widthratio choice.votes all_votes 100 %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<br>
+<div class="row center">
+  {% if not question.closed %}
+    <a class="btn grey" href="{% url 'vote' question.id %}">Vote</a>
+  {% endif %}
+  <a class="btn grey" href="{% url 'manage' question.id %}">Manage</a>
+  <a class="btn grey" href="{% url 'index' %}">Return</a>
+</div>
+<br>
+
+{% endblock %}

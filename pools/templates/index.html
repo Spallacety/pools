@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<h5 class="center">Opened questions</h5>
+<table class="highlight">
+  <thead>
+    <tr>
+      <th>Question</th>
+      <th class="right-align">Pub. date</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for question in opened_questions %}
+    <tr>
+      <td><a class="grey-text" href="{% url 'question' question.id %}">{{ question.question_text }}</a></td>
+      <td class="right-align">{{ question.pub_date }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<br>
+<h5 class="center">Closed questions</h5>
+<table class="highlight">
+  <thead>
+    <tr>
+      <th>Question</th>
+      <th class="right-align">Pub. date</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for question in closed_questions %}
+    <tr>
+      <td><a class="grey-text" href="{% url 'results' question.id %}">{{ question.question_text }}</a></td>
+      <td class="right-align">{{ question.pub_date }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<br>
+{% endblock %}
